@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT API Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Include Axios -->
+</head>
+<body>
+    <h1>Input text to get a response</h1>
+    <div>
+        <input type="text" id="inputText" placeholder="Type your text here" />
+        <button id="submitButton">Submit</button>
+        <div>
+            <p id="outputText"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('submitButton').addEventListener('click', async () => {
+            const inputText = document.getElementById('inputText').value;
+            const API_URL = "http://trainer.youngnamhlady.com/api/chatgpt/"; // Replace with your actual endpoint URL
+            
+            if (inputText.trim() === "") {
+                document.getElementById('outputText').innerText = "Please enter some text.";
+                return;
+            }
+            
+            try {
+                const response = await axios.get(API_URL, {
+                    params: { input: inputText }
+                });
+                console.log("Response from chatgpt:", response.data.response);
+                document.getElementById('outputText').innerText = response.data.response;
+            } catch (error) {
+                console.error("Error sending chat request:", error);
+                document.getElementById('outputText').innerText = "Failed to fetch chat response.";
+            }
+        });
+    </script>
+</body>
+</html>
